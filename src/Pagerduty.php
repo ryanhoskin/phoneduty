@@ -14,8 +14,6 @@ use \DateInterval;
 
 class Pagerduty {
 
-    const DEFAULT_TIMEZONE = 'Pacific/Auckland';
-
     protected $APItoken;
     protected $URL;
     protected $httpClient;
@@ -106,7 +104,6 @@ class Pagerduty {
                     $user = array(
                         'full_name'   => $json['user']['name'],
                         'first_name'  => $this->extractFirstName($json['user']['name']),
-                        'local_time'    => $this->getCurrentTimeForTimezone($json['user']['time_zone']),
                         'phone_number' => "+{$method['country_code']}{$method['phone_number']}",
                     );
                     break;
@@ -131,30 +128,5 @@ class Pagerduty {
 
         $pieces = explode(' ', $name);
         return $pieces[0];
-    }
-
-    /**
-     *
-     * Get the current time for the specified timezone.
-     * If the timezone is invalid, default to using
-     * self::DEFAULT_TIMEZONE
-     *
-     * (this is a workaround to PagerDuty currently returning
-     * some broken timezone data)
-     *
-     * @param string $tz
-     *
-     * @return DateTime
-     */
-    protected function getCurrentTimeForTimezone($tz) {
-
-        try {
-            $tzObj = new DateTimeZone($tz);
-        } catch (\Exception $e) {
-            // TZ is invalid, try default
-            $tzObj = new DateTimeZone(self::DEFAULT_TIMEZONE);
-        }
-
-        return new DateTime('now', $tzObj);
     }
 } 

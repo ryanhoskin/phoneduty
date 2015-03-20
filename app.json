@@ -1,7 +1,7 @@
 {
   "name": "Phoneduty",
   "description": "A Twilio/PagerDuty integration to route incoming calls to the on-call engineer",
-  "repository": "https://github.com/vend/phoneduty",
+  "repository": "https://github.com/ryanhoskin/phoneduty",
   "keywords": [
     "twilio",
     "pagerduty",
